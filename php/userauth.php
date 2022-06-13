@@ -8,7 +8,7 @@ function registerUser($fullnames, $email, $password, $gender, $country){
     $conn = db();
    //check if user with this email already exist in the database
    if(mysqli_num_rows(mysqli_query($conn, "SELECT `id` FROM `students` WHERE `email`='{$email}'")) == 0) {
-       if(mysqli_query($conn, "INSERT INTO `students` ('{$fullnames}', '{$country}', '{$email}', '{$gender}', '{$password}')")) {
+       if(mysqli_query($conn, "INSERT INTO `students` (`full_names`, `country`, `email`, `gender`, `password`) VALUES ('{$fullnames}', '{$country}', '{$email}', '{$gender}', '{$password}')")) {
            echo "User Successfully registered";
        }
    }
@@ -26,6 +26,7 @@ function loginUser($email, $password){
     //if true then set user session for the user and redirect to the dasbboard
      if(mysqli_num_rows(($query = mysqli_query($conn, "SELECT `full_names` FROM `students` WHERE `email`='{$email}' AND `password`='{$password}'"))) > 0) {
         $fn = mysqli_fetch_assoc($query);
+    	session_start();
         $_SESSION["username"] = $fn["full_names"];
         header("Location: ../dashboard.php");
     }

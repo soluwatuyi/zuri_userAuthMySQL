@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "userauth.php";
 include_once "../config.php";
 
